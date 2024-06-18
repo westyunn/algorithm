@@ -12,7 +12,7 @@ function solution(array, commands) {
         // 숫자 배열로 정렬하려면 아래와 같이 정렬해야함 
         arr.sort((a, b) => a - b);
         let num = arr[k-1];
-        answer.push(num);
+        answer = [...answer, num];
     }
     return answer;
 }
