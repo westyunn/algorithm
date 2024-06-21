@@ -16,13 +16,14 @@ public class Main {
             keyword.add(br.readLine());
         }
         for(int i=0; i<M; i++) {
-            // 아예 stringTokenizer을 사용해 쉼표 기준으로 분리 
+            // 아예 stringTokenizer을 사용해 쉼표 기준으로 분리
             st = new StringTokenizer(br.readLine(),",");
             while(st.hasMoreTokens()) {
                 String str = st.nextToken();
                 keyword.remove(str);
             }
-            System.out.println(keyword.size());
+            sb.append(keyword.size()).append('\n');
         }
+        System.out.println(sb);
     }
 }
