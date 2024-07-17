@@ -1,8 +1,6 @@
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.rmi.UnexpectedException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -24,12 +22,10 @@ public class Main {
         int tc = Integer.parseInt(br.readLine());
         for(int t=0; t<tc; t++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            ArrayList<Point[]> list = new ArrayList<>();
             int stX = Integer.parseInt(st.nextToken());
             int stY = Integer.parseInt(st.nextToken());
             int endX = Integer.parseInt(st.nextToken());
             int endY = Integer.parseInt(st.nextToken());
-            list.add(new Point[]{new Point(stX, stY), new Point(endX, endY)});
             int n = Integer.parseInt(br.readLine()); // 행성 개수
             ArrayList<Planet> planets = new ArrayList<>();
             for(int i=0; i<n; i++) {
@@ -42,18 +38,13 @@ public class Main {
             // 점과 점 사이의 거리 계산해서 해당 원 반지름과 비교
             int cnt = 0;
             for(int i=0; i<planets.size(); i++) {
-                int stx = list.get(0)[0].x;
-                int sty = list.get(0)[0].y;
-                int endx = list.get(0)[1].x;
-                int endy = list.get(0)[1].y;
-
                 int x2 = planets.get(i).x;
                 int y2 = planets.get(i).y;
                 int r = planets.get(i).radius;
 
-                if(checkSt(stx, sty, x2, y2, r) && !checkEnd(endx, endy, x2, y2, r)) {
+                if(isIn(stX, stY, x2, y2, r) && !isIn(endX, endY, x2, y2, r)) {
                     cnt++;
-                } else if(!checkSt(stx, sty, x2, y2, r) && checkEnd(endx, endy, x2, y2, r)) {
+                } else if(!isIn(stX, stY, x2, y2, r) && isIn(endX, endY, x2, y2, r)) {
                     cnt++;
                 }
             }
@@ -62,13 +53,9 @@ public class Main {
         }
         System.out.println(sb);
     }
-    public static boolean checkSt(int x1, int y1, int x2, int y2, int r) {
+    public static boolean isIn(int x1, int y1, int x2, int y2, int r) {
         double dist = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
         return dist<=r; // true면 범위 안 false면 범위 밖
     }
 
-    public static boolean checkEnd(int x1, int y1, int x2, int y2, int r) {
-        double dist = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-        return dist <= r;
-    }
 }
