@@ -15,22 +15,25 @@ public class Main {
         for(int i=1; i<=N; i++){
             StringTokenizer st = new StringTokenizer(br.readLine());
             for(int j=1; j<=i; j++) {
-                triangle[i][j] = Integer.parseInt(st.nextToken());
-                dp[i][j] = -1;
+                triangle[i][j] = Integer.parseInt(st.nextToken());;
             }
         }
-        System.out.println(dp(1, 1)); // 시작점
-
-    }
-    public static int dp(int r, int c) {
-        if(r == N) {
-            return triangle[r][c]; // 마지막 행은 원본배열로 반환 -> 위로 올라가면서 최적화 값 구해주면 됨 
+        for(int i=1; i<=N; i++) {
+            for(int j=1; j<=i; j++) {
+                dp[i][j] = Math.max(dp[i-1][j-1], dp[i-1][j]) + triangle[i][j];
+            }
         }
 
-        if(dp[r][c] == -1) {
-            return dp[r][c] = Math.max(dp(r+1, c), dp(r+1, c+1)) + triangle[r][c];
-        }
+        int ans = 0;
 
-        return dp[r][c];
+        for(int i=1; i<=N; i++) {
+            for(int j=1; j<=i; j++) {
+                if(ans < dp[i][j]) {
+                    ans = dp[i][j];
+                }
+            }
+        }
+        System.out.println(ans);
+
     }
 }
