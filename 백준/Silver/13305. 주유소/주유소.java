@@ -29,15 +29,17 @@ public class Main {
             oils.add(new GasStation(info[0][i], info[1][i]));
         }
 
-        int first = oils.get(0).dist * oils.get(0).cost; // 첫번째 값 저장
-        int min = 0;
-        // 이전 주유소 충전 비용 * 현 거리랑 현재 주유소 충전 비용 * 현 거리 값 비교해서 작은 거 더해주기
-        for(int i=1; i<N; i++) {
-            min += Math.min(oils.get(i-1).cost * oils.get(i).dist, oils.get(i).cost * oils.get(i).dist);
+        long currentPrice = oils.get(0).cost; // 첫번째 충전값 저장
+        long answer = 0;
+       
+        for(int i=0; i<N-1; i++) {
+            answer += currentPrice * oils.get(i).dist;
+            if(currentPrice > oils.get(i+1).cost) {
+                currentPrice = oils.get(i+1).cost;
+            }
         }
-        min += first;
 
-        bw.write(String.valueOf(min));
+        bw.write(String.valueOf(answer));
         bw.flush();
         bw.close();
     }
