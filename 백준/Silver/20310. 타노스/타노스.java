@@ -3,12 +3,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Main {
-    static ArrayList<Character> tanos;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
         String str = br.readLine();
-        tanos = new ArrayList<>();
+        ArrayList<Character> list = new ArrayList<>();
         int zero = 0; int one = 0;
         for(int i=0; i<str.length(); i++) {
             Character c = str.charAt(i);
@@ -17,31 +16,34 @@ public class Main {
             } else if( c == '1') {
                 one++;
             }
-            tanos.add(c);
+            list.add(c);
         }
-        Collections.sort(tanos);
-        removeHalf(tanos, zero, one);
-        for(int i=0; i<tanos.size(); i++) {
-            sb.append(tanos.get(i));
+        zero = zero / 2;
+        one = one / 2;
+        // 문자열 살려서 제거하는 거였음 ㅎ;; 0은 뒤에서부터 제거 1은 앞에서부터 제거
+        removeHalf(list, zero, one);
+        for(int i=0; i<list.size(); i++) {
+            sb.append(list.get(i));
         }
         System.out.println(sb);
     }
-    public static void removeHalf(ArrayList<Character> tanos, int zero, int one) {
+    public static void removeHalf(ArrayList<Character> list, int zero, int one) {
         int zeroCount = 0; int oneCount = 0;
-        for(int i=0; i<tanos.size(); i++) {
-            if(tanos.get(i) == '0') {
-                if(zeroCount == zero / 2) {
-                    continue;
+        for(int i=0; i<list.size(); i++) {
+            if(list.get(i) == '1') {
+                if(oneCount < one) {
+                    oneCount++;
+                    list.remove(i);
+                    i--;
                 }
-                zeroCount++;
-                tanos.remove(i);
-
-            } else if(tanos.get(i) == '1') {
-                if(oneCount == one / 2) {
-                    continue;
+            }
+        }
+        for(int i=list.size()-1; i>=0; i--) {
+            if(list.get(i) == '0') {
+                if(zeroCount < zero) {
+                    zeroCount++;
+                    list.remove(i);
                 }
-                oneCount++;
-                tanos.remove(i);
             }
         }
 
